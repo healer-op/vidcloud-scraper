@@ -3,7 +3,7 @@ VidCloud Scraper☁️
 
 Please Star My Repository In Order For Me To Mentain this scraper 
 
-##Basic Installion
+## Basic Installion
 
 ```
 git clone https://github.com/healer-op/vidcloud-scraper.git
