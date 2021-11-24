@@ -15,6 +15,15 @@ var domain = "https://vidcloud.uno"
 
 const port = 3000
 
+//////////////////////////////////////////////// 👷 GET YOUR CUSTOM SCARPER
+/*
+
+                  𝕴 𝖈𝖆𝖓 𝖒𝖆𝖉𝖊 𝖆 𝖈𝖚𝖘𝖙𝖔𝖒 𝖜𝖊𝖇 𝖘𝖈𝖗𝖆𝖕𝖊𝖗
+                  𝕗𝕠𝕣 𝕪𝕠𝕦 𝕒𝕥 𝕧𝕖𝕣𝕪 𝕣𝕖𝕒𝕤𝕠𝕟𝕒𝕓𝕝𝕖 𝕣𝕒𝕥𝕖
+           ｙｏｕ ｃａｎ ｃｏｎｔａｃｔ ｍｅ ｏｎ ｄｉｓｃｏｒｄ
+       <@752769834550558763> put this any discord channel and dm me
+
+*/
 //////////////////////////////////////////////// API RULES
 
 var whitelist = ['http://example1.com', 'http://127.0.0.1:5500', 'http://cms.weeb.eu.org','https://cms.weeb.eu.org','https://an.weeb.eu.org','http://an.weeb.eu.org']
@@ -42,14 +51,14 @@ app.get('/',cors(corsOptionsDelegate), (req, res) => {
     🧯Cinema : /v/cinema <br>
     >>>>>>>>>Example : <a href="/v/cinema">Click Me</a> <br>
     🧯Search : /v/search/:searchterm <br>
-    >>>>>>>>>Example : <a href="/v/search/:james">Click Me</a> <br>
+    >>>>>>>>>Example : <a href="/v/search/james">Click Me</a> <br>
     🧯VideoLink : /v/video/:li <br>
     >>>>>>>>>Example : <a href="v/video/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=">Click Me</a> <br>
     🧯Related : /v/related/:li <br>
     >>>>>>>>>Example : <a href="/v/related/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=">Click Me</a> <br>
     <hr>
-    <p>🔴Note** : li = bash64 encode link of vidcloud for example</p><br>
-    <p>for example : /v/video/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=<br>
+    <p>🔴Note** : li = bash64 encode link of vidcloud for example<br>
+    for example : /v/video/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=<br>
     Go to https://www.base64encode.org/ an type this (aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=<br>
     You Will Understand Everything</p>
 `)
