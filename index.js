@@ -30,6 +30,31 @@ var corsOptionsDelegate = function (req, callback) {
 
 ///////////////////////////////////////////// MADE BY HEALER
 
+///////////////////////////////////////////// HOME PAGE
+app.get('/',cors(corsOptionsDelegate), (req, res) => {
+    res.send(` VidCloudApi📺 <br>
+    <p>Made By https://github.com/healer-op</p>
+    <hr>
+    🧯Recent : /v <br>
+    >>>>>>>>>Example : <a href="/v">Click Me</a> <br>
+    🧯TvSeries : /v/series <br>
+    >>>>>>>>>Example : <a href="/v/series">Click Me</a> <br>
+    🧯Cinema : /v/cinema <br>
+    >>>>>>>>>Example : <a href="/v/cinema">Click Me</a> <br>
+    🧯Search : /v/search/:searchterm <br>
+    >>>>>>>>>Example : <a href="/v/search/:james">Click Me</a> <br>
+    🧯VideoLink : /v/video/:li <br>
+    >>>>>>>>>Example : <a href="v/video/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=">Click Me</a> <br>
+    🧯Related : /v/related/:li <br>
+    >>>>>>>>>Example : <a href="/v/related/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=">Click Me</a> <br>
+    <hr>
+    <p>🔴Note** : li = bash64 encode link of vidcloud for example</p><br>
+    <p>for example : /v/video/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=<br>
+    Go to https://www.base64encode.org/ an type this (aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=<br>
+    You Will Understand Everything</p>
+`)
+})
+
 /////////////////////////////////////////////  RECENT ON VIDCLOUD
 
 app.get('/v',cors(corsOptionsDelegate), (req, res) => {
@@ -155,7 +180,7 @@ app.get('/v/video/:li',cors(corsOptionsDelegate), async (req, res) => {
 
 
     // 🔴 Note** Have to pass bash64 encode link like 
-    // for example : v/video/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=
+    // for example : /v/video/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=
     // Go to https://www.base64encode.org/ an type this (aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=)
     // You Will Understand Everything
 
