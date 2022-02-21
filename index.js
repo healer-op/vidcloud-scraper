@@ -15,18 +15,7 @@ var domain = "https://vidcloud.uno"
 
 const port = 3000
 
-//////////////////////////////////////////////// 👷 GET YOUR CUSTOM SCARPER
-/*
-
-                  𝕴 𝖈𝖆𝖓 𝖒𝖆𝖉𝖊 𝖆 𝖈𝖚𝖘𝖙𝖔𝖒 𝖜𝖊𝖇 𝖘𝖈𝖗𝖆𝖕𝖊𝖗
-                  𝕗𝕠𝕣 𝕪𝕠𝕦 𝕒𝕥 𝕧𝕖𝕣𝕪 𝕣𝕖𝕒𝕤𝕠𝕟𝕒𝕓𝕝𝕖 𝕣𝕒𝕥𝕖
-           ｙｏｕ ｃａｎ ｃｏｎｔａｃｔ ｍｅ ｏｎ ｄｉｓｃｏｒｄ
-       <@752769834550558763> put this any discord channel and dm me
-
-*/
-//////////////////////////////////////////////// API RULES
-
-var whitelist = ['http://example1.com', 'http://127.0.0.1:5500', 'http://cms.weeb.eu.org','https://cms.weeb.eu.org','https://an.weeb.eu.org','http://an.weeb.eu.org']
+var whitelist = [`https://localhost:3000`,`http://localhost:3000`]
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
@@ -40,51 +29,40 @@ var corsOptionsDelegate = function (req, callback) {
 ///////////////////////////////////////////// MADE BY HEALER
 
 ///////////////////////////////////////////// HOME PAGE
-app.get('/',cors(corsOptionsDelegate), (req, res) => {
+app.get('/api',cors(corsOptionsDelegate), (req, res) => {
+
     res.send(` VidCloudApi📺 <br>
     <p>Made By https://github.com/healer-op</p>
     <hr>
     🧯Recent : /v <br>
-    >>>>>>>>>Example : <a href="/v">Click Me</a> <br>
+    >>>>>>>>>Example : <a href="/api/recent">Click Me</a> <br>
     🧯TvSeries : /v/series <br>
-    >>>>>>>>>Example : <a href="/v/series">Click Me</a> <br>
+    >>>>>>>>>Example : <a href="/api/series">Click Me</a> <br>
     🧯Cinema : /v/cinema <br>
-    >>>>>>>>>Example : <a href="/v/cinema">Click Me</a> <br>
+    >>>>>>>>>Example : <a href="/api/cinema">Click Me</a> <br>
     🧯Search : /v/search/:searchterm <br>
-    >>>>>>>>>Example : <a href="/v/search/james">Click Me</a> <br>
+    >>>>>>>>>Example : <a href="/api/search/james">Click Me</a> <br>
     🧯VideoLink : /v/video/:li <br>
-    >>>>>>>>>Example : <a href="v/video/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=">Click Me</a> <br>
+    >>>>>>>>>Example : <a href="/api/video/the-ice-age-adventures-of-buck-wild/">Click Me</a> <br>
     🧯Related : /v/related/:li <br>
-    >>>>>>>>>Example : <a href="/v/related/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=">Click Me</a> <br>
+    >>>>>>>>>Example : <a href="/api/related/the-ice-age-adventures-of-buck-wild/">Click Me</a> <br>
     <hr>
-    <p>🔴Note** : li = bash64 encode link of vidcloud for example<br>
-    for example : /v/video/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=<br>
-    Go to https://www.base64encode.org/ an type this (aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=<br>
-    You Will Understand Everything</p>
 `)
 })
 
 /////////////////////////////////////////////  RECENT ON VIDCLOUD
 
-app.get('/v',cors(corsOptionsDelegate), (req, res) => {
-    var data={};
-    data.name = "👷VidCloud Recent";
-    data.author = "🌟healer-op";
-    data.imgs = [];
-    data.titles = [];
-    data.links = [];
+app.get('/api/recent',cors(corsOptionsDelegate), (req, res) => {
+    var data=[];
     
     axios.get(`${domain}`).then(urlResponse =>{
         const $ = cheerio.load(urlResponse.data);
         $('div.col-md-2.col-sm-6.col-xs-6.item.responsive-height.post').each((i,element) =>{
-            
-            const link = $(element).find('h3').find('a').attr('href')
-            data.links.push(link);
-            const title = $(element).find('h3').text()
-            data.titles.push(title.trim());
-            const img = $(element).find('img').attr('src')
-            data.imgs.push(img);
-            
+            data.push({
+                link: $(element).find('h3').find('a').attr('href').split(`${domain}/video/`)[1],
+                title: $(element).find('h3').text(),
+                img: $(element).find('img').attr('src')  
+            });
         });
     })
     .then(() => {
@@ -95,25 +73,20 @@ app.get('/v',cors(corsOptionsDelegate), (req, res) => {
 
 ////////////////////////////////////////////////////////////// VID CLOUD TV SERIES
 
-app.get('/v/series',cors(corsOptionsDelegate), (req, res) => {
-    var data={};
-    data.name = "👷VidCloud Series";
-    data.author = "🌟healer-op";
-    data.imgs = [];
-    data.titles = [];
-    data.links = [];
+app.get('/api/series',cors(corsOptionsDelegate), (req, res) => {
+    var data=[];
     
     axios.get(`${domain}/series`).then(urlResponse =>{
         const $ = cheerio.load(urlResponse.data);
         $('div.col-md-2.col-sm-6.col-xs-6.item.responsive-height.post').each((i,element) =>{
-            
-            const link = $(element).find('h3').find('a').attr('href')
-            data.links.push(link);
-            const title = $(element).find('h3').text()
-            data.titles.push(title.trim());
-            const img = $(element).find('img').attr('src')
-            data.imgs.push(img);
-            
+            data.push({
+                link: $(element).find('h3').find('a').attr('href').split(`${domain}/video/`)[1],
+                
+                title: $(element).find('h3').text(),
+
+                img: $(element).find('img').attr('src')
+
+            });
         });
     })
     .then(() => {
@@ -124,25 +97,17 @@ app.get('/v/series',cors(corsOptionsDelegate), (req, res) => {
 
 ////////////////////////////////////////////////////////////// VID CLOUD CINEMA
 
-app.get('/v/cinema',cors(corsOptionsDelegate), (req, res) => {
-    var data={};
-    data.name = "👷VidCloud Cinema";
-    data.author = "🌟healer-op";
-    data.imgs = [];
-    data.titles = [];
-    data.links = [];
+app.get('/api/cinema',cors(corsOptionsDelegate), (req, res) => {
+    var data=[];
     
     axios.get(`${domain}/cinema-movies`).then(urlResponse =>{
         const $ = cheerio.load(urlResponse.data);
         $('div.col-md-2.col-sm-6.col-xs-6.item.responsive-height.post').each((i,element) =>{
-            
-            const link = $(element).find('h3').find('a').attr('href')
-            data.links.push(link);
-            const title = $(element).find('h3').text()
-            data.titles.push(title.trim());
-            const img = $(element).find('img').attr('src')
-            data.imgs.push(img);
-            
+            data.push({
+            link: $(element).find('h3').find('a').attr('href').split(`${domain}/video/`)[1],
+            title:  $(element).find('h3').text(),
+            img: $(element).find('img').attr('src')
+            });
         });
     })
     .then(() => {
@@ -153,26 +118,18 @@ app.get('/v/cinema',cors(corsOptionsDelegate), (req, res) => {
 
 ////////////////////////////////////////////////////////////// VID CLOUD SEARCH
 
-app.get('/v/search/:searchterm',cors(corsOptionsDelegate), (req, res) => {
+app.get('/api/search/:searchterm',cors(corsOptionsDelegate), (req, res) => {
     var li = req.params.searchterm;
-    var data={};
-    data.name = "👷VidCloud Search";
-    data.author = "🌟healer-op";
-    data.imgs = [];
-    data.titles = [];
-    data.links = [];
+    var data=[];
     
     axios.get(`${domain}/?s=${li}`).then(urlResponse =>{
         const $ = cheerio.load(urlResponse.data);
         $('div.item.responsive-height.col-md-4.col-sm-6.col-xs-6').each((i,element) =>{
-            
-            const link = $(element).find('h3').find('a').attr('href')
-            data.links.push(link);
-            const title = $(element).find('h3').text()
-            data.titles.push(title.trim());
-            const img = $(element).find('img').attr('src')
-            data.imgs.push(img);
-            
+            data.push({
+                link: $(element).find('h3').find('a').attr('href').split(`${domain}/video/`)[1],
+                title: $(element).find('h3').text(),
+                img: $(element).find('img').attr('src')
+            });
         });
     })
     .then(() => {
@@ -183,9 +140,9 @@ app.get('/v/search/:searchterm',cors(corsOptionsDelegate), (req, res) => {
 
 ////////////////////////////////////////////////////////////// VID CLOUD VIDEO LINK
 
-app.get('/v/video/:li',cors(corsOptionsDelegate), async (req, res) => {
+app.get('/api/video/:li',cors(corsOptionsDelegate), async (req, res) => {
     var li = req.params.li;
-    var lis = Buffer.from(li, 'base64').toString('ascii')  
+    var lis = li;
 
 
     // 🔴 Note** Have to pass bash64 encode link like 
@@ -194,18 +151,14 @@ app.get('/v/video/:li',cors(corsOptionsDelegate), async (req, res) => {
     // You Will Understand Everything
 
 
-    var data={};
-    data.name = "👷VidCloud VideoLink";
-    data.author = "🌟healer-op";
-    data.links = [];
+    var data=[];
     
-        axios.get(`${lis}`).then(urlResponse =>{
+        axios.get(`${domain}/video/${lis}`).then(urlResponse =>{
         const $ = cheerio.load(urlResponse.data);
         $('iframe').each((i,element) =>{
-            
-            const link = $(element).attr('src')
-            data.links.push(link.trim());
-            
+            data.push({
+                link: $(element).attr('src')
+            });
         });
     })
     .then(() => {
@@ -216,33 +169,25 @@ app.get('/v/video/:li',cors(corsOptionsDelegate), async (req, res) => {
 
 ////////////////////////////////////////////////////////////// VID CLOUD VIDEO RELATED
 
-app.get('/v/related/:li', cors(corsOptionsDelegate), (req, res) => {
+app.get('/api/related/:li', cors(corsOptionsDelegate), (req, res) => {
     var li = req.params.li;
-    var lis = Buffer.from(li, 'base64').toString('ascii')
+    var lis = li;
 
     // 🔴 Note** Have to pass bash64 encode link like 
     // for example : /v/related/aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=
     // Go to https://www.base64encode.org/ an type this (aHR0cHM6Ly92aWRjbG91ZC51bm8vdmlkZW8vYml0Y2hpbi10aGUtc291bmQtYW5kLWZ1cnktb2Ytcmljay1qYW1lcy8=)
     // You Will Understand Everything
 
-    var data={};
-    data.name = "👷VidCloud Related";
-    data.author = "🌟healer-op";
-    data.imgs = [];
-    data.titles = [];
-    data.links = [];
+    var data=[];
     
-    axios.get(`${lis}`).then(urlResponse =>{
+    axios.get(`${domain}/video/${lis}`).then(urlResponse =>{
         const $ = cheerio.load(urlResponse.data);
         $('div.col-md-2.col-sm-2.col-xs-12.item.responsive-height').each((i,element) =>{
-            
-            const link = $(element).find('h3').find('a').attr('href')
-            data.links.push(link);
-            const title = $(element).find('h3').text()
-            data.titles.push(title.trim());
-            const img = $(element).find('img').attr('src')
-            data.imgs.push(img);
-            
+            data.push({
+                link: $(element).find('h3').find('a').attr('href').split(`${domain}/video/`)[1],
+                title: $(element).find('h3').text(),
+                img: $(element).find('img').attr('src')
+            });
         });
     })
     .then(() => {
